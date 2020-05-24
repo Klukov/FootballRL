@@ -1,2 +1,3 @@
 # FootballRL
-My master thesis project
+My master thesis project  
+based on: https://github.com/google-research/football

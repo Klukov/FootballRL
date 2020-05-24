@@ -1,0 +1,5 @@
+ray
+stable_baselines
+tensorflow==2.1
+sonnet
+gfootball
