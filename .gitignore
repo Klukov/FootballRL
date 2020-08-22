@@ -130,3 +130,6 @@ dmypy.json
 
 # Intellij
 .idea/
+
+# Trained Models
+trained_models/

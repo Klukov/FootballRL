@@ -1,5 +1,5 @@
 ray
 stable_baselines
-tensorflow==2.1
+tensorflow-gpu==1.15
 sonnet
 gfootball
