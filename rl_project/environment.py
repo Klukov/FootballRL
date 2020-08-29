@@ -8,25 +8,16 @@ from stable_baselines.common.vec_env.subproc_vec_env import SubprocVecEnv
 
 def create_demo_env(
         level='academy_empty_goal_close',
-        state='extracted_stacked',
-        reward_experiment='scoring',
+        reward_experiment='scoring,checkpoints',
+        stacked=True,
+        representation='extracted',
 ):
-    # return _create_single_football_env(
-    #         process_number=0,
-    #         level=level,
-    #         state=state,
-    #         reward_experiment=reward_experiment,
-    #         write_goal_dumps=False,
-    #         write_full_episode_dumps=False,
-    #         write_video=False,
-    #         dump_frequency=1,
-    #         render=True,
-    #     )
     return SubprocVecEnv([
         (lambda _i=i: _create_single_football_env(
             process_number=_i,
             level=level,
-            state=state,
+            stacked=stacked,
+            representation=representation,
             reward_experiment=reward_experiment,
             write_goal_dumps=False,
             write_full_episode_dumps=False,
@@ -41,8 +32,9 @@ def create_demo_env(
 def create_training_env(
         number_of_processes,
         level='academy_empty_goal_close',
-        state='extracted_stacked',
-        reward_experiment='scoring',
+        stacked=True,
+        representation='extracted',
+        reward_experiment='scoring,checkpoints',
         write_goal_dumps=False,
         write_full_episode_dumps=False,
         write_video=False,
@@ -56,28 +48,30 @@ def create_training_env(
         (lambda _i=i: _create_single_football_env(
             process_number=_i,
             level=level,
-            state=state,
+            stacked=stacked,
+            representation=representation,
             reward_experiment=reward_experiment,
             write_goal_dumps=write_goal_dumps,
             write_full_episode_dumps=write_full_episode_dumps,
             write_video=write_video,
             dump_frequency=dump_frequency,
-            render=False,
+            render=True,
         ))
         for i in range(number_of_processes)
     ])
 
 
 def _create_single_football_env(
+        level,
+        stacked,
+        representation,
+        reward_experiment,
+        write_goal_dumps,
+        write_full_episode_dumps,
+        write_video,
+        dump_frequency,
+        render,
         process_number=0,
-        level='academy_empty_goal_close',
-        state='extracted_stacked',
-        reward_experiment='scoring',
-        write_goal_dumps=False,
-        write_full_episode_dumps=False,
-        write_video=False,
-        dump_frequency=1,
-        render=False,
 ):
     """
   Creates gfootball environment.
@@ -85,7 +79,8 @@ def _create_single_football_env(
   """
     env = create_environment(
         env_name=level,
-        stacked=('stacked' in state),
+        stacked=stacked,
+        representation=representation,
         rewards=reward_experiment,
         logdir=logger.get_dir(),
         write_goal_dumps=write_goal_dumps and (process_number == 0),

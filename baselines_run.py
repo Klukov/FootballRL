@@ -1,4 +1,4 @@
-from rl_project import ppo2
+from rl_project.algorithm import ppo2
 from rl_project import environment
 
 import logging
@@ -6,8 +6,8 @@ import re
 import time
 
 if __name__ == '__main__':
-    number_of_envs = int(1)
-    total_number_of_steps = int(1e5)
+    number_of_envs = int(8)
+    total_number_of_steps = int(1e6)
 
     run_name = "ppo_test_model_{steps}M_steps_{envs}-env".format(
         steps=str(total_number_of_steps / 1e6).replace(".", "") if total_number_of_steps < 1e6
