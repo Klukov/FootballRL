@@ -2,7 +2,7 @@ bidict
 ray
 ray[rllib]
 stable_baselines
-tensorflow==1.15
+tensorflow==1.15.2
 tensorflow-gpu==1.15
 sonnet
 gfootball
