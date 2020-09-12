@@ -29,8 +29,11 @@ default setting used in code
 **Stacked:**
 - True 
 ![#1589F0](https://placehold.it/15/1589F0/000000?text=+)
-- False  
 Only for: pixels, pixels_gray, extracted
+- False  
+
+
+<br/>
 
 **Possible scenarios:<br/>
 (check if model is trained for specific scenario)**
