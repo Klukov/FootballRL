@@ -1,4 +1,5 @@
 bidict
+absl-py
 ray
 ray[rllib]
 stable_baselines
