@@ -34,6 +34,7 @@ def create_demo_env(
         reward_experiment='scoring,checkpoints',
         stacked=True,
         representation='extracted',
+        render=False,
 ):
     return SubprocVecEnv([
         (lambda _i=i: _create_single_football_env(
@@ -46,7 +47,7 @@ def create_demo_env(
             write_full_episode_dumps=False,
             write_video=False,
             dump_frequency=1,
-            render=True,
+            render=render,
         ))
         for i in range(1)
     ])

@@ -18,6 +18,11 @@ flags.DEFINE_boolean('render', False,
                      'if enabled then game screen pop up and you can observe how agent behaves')
 flags.DEFINE_enum('reward', 'scoring', ['scoring', 'checkpoints', 'scoring,checkpoints'],
                   'Option defines how each run should be rewarded')
+flags.DEFINE_enum('representation', 'extracted', ['extracted', 'pixels', 'pixels_gray', 'simple115v2'],
+                  'Definition of the representation used to build the observation. More info in gfootball.env.__init__')
+flags.DEFINE_boolean('stacked', True, 'If True, stack 4 observations, otherwise, only the last observation is returned '
+                                      'by the environment. Stacking is only possible when representation is one of the '
+                                      'following: "pixels", "pixels_gray" or "extracted"')
 
 
 def main(_):
@@ -43,6 +48,7 @@ def main(_):
         reward_experiment=FLAGS.reward,
         representation=FLAGS.representation,
         stacked=FLAGS.stacked,
+        render=FLAGS.render,
     )
     number_of_runs = int(0)
     total_reward = float(0)
@@ -64,9 +70,9 @@ def main(_):
 
     logger.info(
         "EVALUATOR: ended with {runs} runs and receive in total reward: {reward}. Average reward: {average}".format(
-            runs=number_of_runs + 1,
+            runs=number_of_runs,
             reward=total_reward,
-            average=total_reward / (number_of_runs + 1),
+            average=total_reward / number_of_runs,
         ))
 
 

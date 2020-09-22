@@ -18,10 +18,17 @@ flags.DEFINE_integer('scenario_number', int(17),
                      'Defines scenario number - look at Readme.md', int(1), int(18))
 flags.DEFINE_enum('algorithm', 'ppo2', ['ppo2'],
                   'Algorithm to be used for training - only some algorithms from stable-baselines')
+flags.DEFINE_string('algorithm_policy', 'CnnPolicy',
+                    'ActorCriticPolicy name or str - The policy model to use (MlpPolicy, CnnPolicy, CnnLstmPolicy...')
 flags.DEFINE_integer('number_of_envs', int(8),
                      'Number of env run parallelly to get result', int(1))
 flags.DEFINE_integer('number_of_steps', int(1e5),
                      'Total number of steps of the algorithm', int(1))
+flags.DEFINE_enum('representation', 'extracted', ['extracted', 'pixels', 'pixels_gray', 'simple115v2'],
+                  'Definition of the representation used to build the observation. More info in gfootball.env.__init__')
+flags.DEFINE_boolean('stacked', True, 'If True, stack 4 observations, otherwise, only the last observation is returned '
+                                      'by the environment. Stacking is only possible when representation is one of the '
+                                      'following: "pixels", "pixels_gray" or "extracted"')
 
 
 def main(_):
@@ -38,9 +45,13 @@ def main(_):
             vec_env: SubprocVecEnv,
             total_number_of_steps: int,
             algorithm_name: str,
+            algorithm_policy: str,
     ) -> Optional[ActorCriticRLModel]:
         if algorithm_name == 'ppo2':
-            return ppo2.learn_ppo2(vec_env=vec_env, total_number_of_steps=total_number_of_steps)
+            return ppo2.learn_ppo2(
+                vec_env=vec_env,
+                policy=algorithm_policy,
+                total_number_of_steps=total_number_of_steps)
         return None
 
     run_name = get_run_name()
@@ -53,7 +64,12 @@ def main(_):
         representation=FLAGS.representation,
         stacked=FLAGS.stacked,
     )
-    trained_model = train(vec_env=env, total_number_of_steps=FLAGS.number_of_steps, algorithm_name=FLAGS.algorithm)
+    trained_model = train(
+        vec_env=env,
+        total_number_of_steps=FLAGS.number_of_steps,
+        algorithm_name=FLAGS.algorithm,
+        algorithm_policy=FLAGS.algorithm_policy,
+    )
     time_elapsed = time.time() - time_start
     logger.info("Time elapsed " + time.strftime("%H:%M:%S", time.gmtime(time_elapsed)))
     trained_model.save(save_path=run_name)
