@@ -11,7 +11,7 @@ flags.DEFINE_enum('algorithm', 'ppo2', ['ppo2'],
                   'Algorithm used for model training - only some algorithms from stable-baselines')
 flags.DEFINE_string('path', None, 'path to stored model')
 flags.DEFINE_integer('scenario_number', int(17),
-                     'Defines scenario number (look at Readme.md), which will be used for evaluation', int(1), int(18))
+                     'Defines scenario number (look at Readme.md), which will be used for evaluation', int(1), int(19))
 flags.DEFINE_integer('accuracy', int(1e3),
                      'Number of runs to evaluate model correctness', int(1))
 flags.DEFINE_boolean('render', False,

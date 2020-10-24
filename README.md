@@ -37,24 +37,25 @@ Only for: pixels, pixels_gray, extracted
 
 **Possible scenarios:<br/>
 (check if model is trained for specific scenario)**
-- [ ] 11_vs_11_competition
-- [ ] 11_vs_11_stochastic
-- [ ] academy_corner
-- [ ] academy_empty_goal
-- [ ] academy_run_to_score_with_keeper
-- [ ] 11_vs_11_easy_stochastic
-- [ ] 1_vs_1_easy
-- [ ] academy_counterattack_easy
-- [ ] academy_pass_and_shoot_with_keeper
-- [ ] academy_single_goal_versus_lazy
-- [ ] 11_vs_11_hard_stochastic
-- [ ] 5_vs_5
-- [ ] academy_counterattack_hard
-- [ ] academy_run_pass_and_shoot_with_keeper
-- [ ] 11_vs_11_kaggle
-- [ ] academy_3_vs_1_with_keeper
-- [x] academy_empty_goal_close
+1. 11_vs_11_competition
+2. 11_vs_11_stochastic
+3. academy_corner
+4. academy_empty_goal
+5. academy_run_to_score_with_keeper
+6. 11_vs_11_easy_stochastic
+7. 1_vs_1_easy
+8. academy_counterattack_easy
+9. academy_pass_and_shoot_with_keeper
+10. academy_single_goal_versus_lazy
+11. 11_vs_11_hard_stochastic
+12. 5_vs_5
+13. academy_counterattack_hard
+14. academy_run_pass_and_shoot_with_keeper
+15. 11_vs_11_kaggle
+16. academy_3_vs_1_with_keeper
+17. academy_empty_goal_close
 ![#1589F0](https://placehold.it/15/1589F0/000000?text=+)
-- [ ] academy_run_to_score
+18. academy_run_to_score
+19. test_example_multiagent
 
 <br/>

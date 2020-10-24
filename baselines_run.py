@@ -15,7 +15,7 @@ from rl_project.environment import SCENARIO_MAP
 FLAGS = flags.FLAGS
 
 flags.DEFINE_integer('scenario_number', int(17),
-                     'Defines scenario number - look at Readme.md', int(1), int(18))
+                     'Defines scenario number - look at Readme.md', int(1), int(19))
 flags.DEFINE_enum('algorithm', 'ppo2', ['ppo2'],
                   'Algorithm to be used for training - only some algorithms from stable-baselines')
 flags.DEFINE_string('algorithm_policy', 'CnnPolicy',

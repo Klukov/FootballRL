@@ -26,6 +26,7 @@ SCENARIO_MAP = bidict({
     16: 'academy_3_vs_1_with_keeper',
     17: 'academy_empty_goal_close',
     18: 'academy_run_to_score',
+    19: 'test_example_multiagent',
 })
 
 
