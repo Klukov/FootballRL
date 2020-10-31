@@ -1,13 +1,13 @@
 from absl import app
 from absl import flags
 from absl import logging as logger
-from stable_baselines import PPO2
+from stable_baselines import PPO2, DQN, TD3
 
 from rl_project.environment import create_demo_env, SCENARIO_MAP
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_enum('algorithm', 'ppo2', ['ppo2'],
+flags.DEFINE_enum('algorithm', 'ppo2', ['ppo2', 'td3', 'dqn'],
                   'Algorithm used for model training - only some algorithms from stable-baselines')
 flags.DEFINE_string('path', None, 'path to stored model')
 flags.DEFINE_integer('scenario_number', int(17),
@@ -29,6 +29,10 @@ def main(_):
     def load_model(path: str, algorithm='ppo2'):
         if algorithm == 'ppo2':
             return PPO2.load(path)
+        if algorithm == 'dqn':
+            return DQN.load(path)
+        if algorithm == 'td3':
+            return TD3.load(path)
         return None
 
     def get_run_name() -> str:

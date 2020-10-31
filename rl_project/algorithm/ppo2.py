@@ -47,4 +47,4 @@ def learn_ppo2(
         cliprange=clip_range,
         seed=seed,
     )
-    return ppo2.learn(total_timesteps=total_number_of_steps,)
+    return ppo2.learn(total_timesteps=total_number_of_steps)
