@@ -1,13 +1,13 @@
 from absl import app
 from absl import flags
 from absl import logging as logger
-from stable_baselines import PPO2, DQN, TD3
+from stable_baselines import PPO2, DQN, A2C, ACER, GAIL, TRPO
 
 from rl_project.environment import create_demo_env, SCENARIO_MAP
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_enum('algorithm', 'ppo2', ['ppo2', 'td3', 'dqn'],
+flags.DEFINE_enum('algorithm', 'ppo2', ['PPO2', 'DQN', 'A2C', 'ACER', 'GAIL', 'TRPO'],
                   'Algorithm used for model training - only some algorithms from stable-baselines')
 flags.DEFINE_string('path', None, 'path to stored model')
 flags.DEFINE_integer('scenario_number', int(17),
@@ -27,12 +27,18 @@ flags.DEFINE_boolean('stacked', True, 'If True, stack 4 observations, otherwise,
 
 def main(_):
     def load_model(path: str, algorithm='ppo2'):
-        if algorithm == 'ppo2':
+        if algorithm == 'PPO2':
             return PPO2.load(path)
-        if algorithm == 'dqn':
+        if algorithm == 'DQN':
             return DQN.load(path)
-        if algorithm == 'td3':
-            return TD3.load(path)
+        if algorithm == 'A2C':
+            return A2C.load(path)
+        if algorithm == 'ACER':
+            return ACER.load(path)
+        if algorithm == 'GAIL':
+            return GAIL.load(path)
+        if algorithm == 'TRPO':
+            return TRPO.load(path)
         return None
 
     def get_run_name() -> str:

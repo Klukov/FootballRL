@@ -15,6 +15,7 @@ def learn_dqn(
 ) -> DQN:
     """
     Parameter's default values are taken from stable_baselines.deepq.dqn.py
+    There are some memory problems and you cannot use it for more than 60k time steps with 8GB of Ram
     """
     if env is None:
         env = create_training_env(1)
@@ -38,5 +39,6 @@ def learn_dqn(
         prioritized_replay_beta_iters=None,
         prioritized_replay_eps=1e-6,
         param_noise=False,
+        verbose=2,
     )
     return dqn.learn(total_number_of_steps)

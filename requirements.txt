@@ -2,7 +2,7 @@ bidict
 absl-py
 ray
 ray[rllib]
-stable_baselines
+stable_baselines[mpi]
 tensorflow==1.15.4
 tensorflow-gpu==1.15.4
 sonnet

@@ -46,5 +46,6 @@ def learn_ppo2(
         noptepochs=number_of_updates_per_epoch,
         cliprange=clip_range,
         seed=seed,
+        verbose=2,
     )
     return ppo2.learn(total_timesteps=total_number_of_steps)

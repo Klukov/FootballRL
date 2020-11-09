@@ -1,22 +1,16 @@
 import re
 import time
-from typing import Optional
 
 from absl import app
 from absl import flags
 from absl import logging as logger
-from stable_baselines.common import BaseRLModel
-from stable_baselines.common.vec_env import SubprocVecEnv
 
-from rl_project import environment
-from rl_project.algorithm import ppo2, td3, dqn
-from rl_project.environment import SCENARIO_MAP
 
 FLAGS = flags.FLAGS
 
 flags.DEFINE_integer('scenario_number', int(17),
                      'Defines scenario number - look at Readme.md', int(1), int(19))
-flags.DEFINE_enum('algorithm', 'ppo2', ['ppo2', 'td3', 'dqn'],
+flags.DEFINE_enum('algorithm', 'PPO2', ['PPO2', 'DQN', 'A2C', 'ACER', 'GAIL', 'TRPO'],
                   'Algorithm to be used for training - only some algorithms from stable-baselines')
 flags.DEFINE_string('algorithm_policy', 'CnnPolicy',
                     'The policy model to use (MlpPolicy, CnnPolicy, CnnLstmPolicy...')
@@ -41,36 +35,15 @@ def main(_):
             envs=FLAGS.number_of_envs,
         )
 
-    def train(
-            vec_env: SubprocVecEnv,
-            total_number_of_steps: int,
-            algorithm_name: str,
-            algorithm_policy: str,
-    ) -> Optional[BaseRLModel]:
-        if algorithm_name == 'ppo2':
-            return ppo2.learn_ppo2(
-                vec_env=vec_env,
-                policy=algorithm_policy,
-                total_number_of_steps=total_number_of_steps,
-            )
-        if algorithm_name == 'td3':
-            return td3.learn_td3(
-                env=vec_env,
-                policy=algorithm_policy,
-                total_number_of_steps=total_number_of_steps,
-            )
-        if algorithm_name == 'dqn':
-            return dqn.learn_dqn(
-                env=vec_env,
-                policy=algorithm_policy,
-                total_number_of_steps=total_number_of_steps,
-            )
-        return None
-
     run_name = get_run_name()
     logger.get_absl_handler().use_absl_log_file(run_name, './')
     logger.info("STARTED")
     time_start = time.time()
+
+    from rl_project import environment
+    from rl_project.algorithm import train
+    from rl_project.environment import SCENARIO_MAP
+
     env = environment.create_training_env(
         number_of_processes=FLAGS.number_of_envs,
         level=SCENARIO_MAP.get(FLAGS.scenario_number, 'academy_empty_goal_close'),
