@@ -7,7 +7,7 @@ from rl_project.environment import create_demo_env, SCENARIO_MAP
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_enum('algorithm', 'ppo2', ['PPO2', 'DQN', 'A2C', 'ACER', 'GAIL', 'TRPO'],
+flags.DEFINE_enum('algorithm', 'PPO2', ['PPO2', 'DQN', 'A2C', 'ACER', 'GAIL', 'TRPO'],
                   'Algorithm used for model training - only some algorithms from stable-baselines')
 flags.DEFINE_string('path', None, 'path to stored model')
 flags.DEFINE_integer('scenario_number', int(17),
