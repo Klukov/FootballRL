@@ -6,46 +6,53 @@ from stable_baselines.common.vec_env import SubprocVecEnv
 from rl_project.algorithm import ppo2, dqn, a2c, acer, gail, trpo
 
 
-def train(
+def get_configured_rl_model(
         vec_env: SubprocVecEnv,
-        total_number_of_steps: int,
         algorithm_name: str,
         algorithm_policy: str,
 ) -> Optional[BaseRLModel]:
     if algorithm_name == 'PPO2':
-        return ppo2.learn_ppo2(
+        return ppo2.get_ppo2(
             vec_env=vec_env,
             policy=algorithm_policy,
-            total_number_of_steps=total_number_of_steps,
         )
     if algorithm_name == 'DQN':
-        return dqn.learn_dqn(
+        return dqn.get_dqn(
             env=vec_env,
             policy=algorithm_policy,
-            total_number_of_steps=total_number_of_steps,
         )
     if algorithm_name == 'A2C':
-        return a2c.learn_a2c(
+        return a2c.get_a2c(
             vec_env=vec_env,
             policy=algorithm_policy,
-            total_number_of_steps=total_number_of_steps,
         )
     if algorithm_name == 'ACER':
-        return acer.learn_acer(
+        return acer.get_acer(
             vec_env=vec_env,
             policy=algorithm_policy,
-            total_number_of_steps=total_number_of_steps,
         )
     if algorithm_name == 'GAIL':
-        return gail.learn_gail(
+        return gail.get_gail(
             vec_env=vec_env,
             policy=algorithm_policy,
-            total_number_of_steps=total_number_of_steps,
         )
     if algorithm_name == 'TRPO':
-        return trpo.learn_trpo(
+        return trpo.get_trpo(
             vec_env=vec_env,
             policy=algorithm_policy,
-            total_number_of_steps=total_number_of_steps,
         )
     return None
+
+
+def configure_tensorflow() -> None:
+    """
+    Config taken from gfootball repo, check gfootball.examples.run_ppo2.py
+    """
+    import tensorflow.compat.v1 as tf
+    import multiprocessing
+    ncpu = multiprocessing.cpu_count()
+    config = tf.ConfigProto(allow_soft_placement=True,
+                            intra_op_parallelism_threads=ncpu,
+                            inter_op_parallelism_threads=ncpu)
+    config.gpu_options.allow_growth = True
+    tf.Session(config=config).__enter__()

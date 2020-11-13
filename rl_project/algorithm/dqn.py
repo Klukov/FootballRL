@@ -3,10 +3,9 @@ from stable_baselines import DQN
 from rl_project.environment import create_training_env
 
 
-def learn_dqn(
+def get_dqn(
         env=None,
         policy='CnnPolicy',
-        total_number_of_steps=int(1e5),
         learning_rate=5e-4,
         exploration_fraction=0.1,
         exploration_final_eps=0.02,
@@ -19,7 +18,7 @@ def learn_dqn(
     """
     if env is None:
         env = create_training_env(1)
-    dqn = DQN(
+    return DQN(
         policy=policy,
         env=env,
         gamma=0.99,
@@ -41,4 +40,3 @@ def learn_dqn(
         param_noise=False,
         verbose=2,
     )
-    return dqn.learn(total_number_of_steps)

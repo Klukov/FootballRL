@@ -3,10 +3,9 @@ from stable_baselines import GAIL
 from rl_project.environment import create_training_env
 
 
-def learn_gail(
+def get_gail(
         vec_env=None,
         policy='CnnPolicy',
-        total_number_of_steps=int(1e5),
 ) -> GAIL:
     """
     Parameter's default values are taken from stable_baselines.gail.model.py
@@ -15,7 +14,7 @@ def learn_gail(
     """
     if vec_env is None:
         vec_env = create_training_env(1)
-    gail = GAIL(
+    return GAIL(
         policy=policy,
         env=vec_env,
         hidden_size_adversary=100,
@@ -34,4 +33,3 @@ def learn_gail(
         vf_stepsize=3e-4,
         vf_iters=3
     )
-    return gail.learn(total_number_of_steps)

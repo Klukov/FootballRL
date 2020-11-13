@@ -1,9 +1,6 @@
 from absl import app
 from absl import flags
 from absl import logging as logger
-from stable_baselines import PPO2, DQN, A2C, ACER, GAIL, TRPO
-
-from rl_project.environment import create_demo_env, SCENARIO_MAP
 
 FLAGS = flags.FLAGS
 
@@ -27,6 +24,7 @@ flags.DEFINE_boolean('stacked', True, 'If True, stack 4 observations, otherwise,
 
 def main(_):
     def load_model(path: str, algorithm='ppo2'):
+        from stable_baselines import PPO2, DQN, A2C, ACER, GAIL, TRPO
         if algorithm == 'PPO2':
             return PPO2.load(path)
         if algorithm == 'DQN':
@@ -53,36 +51,21 @@ def main(_):
     logger.get_absl_handler().use_absl_log_file(get_run_name(), './')
     logger.info("EVALUATOR STARTED")
     model = load_model(FLAGS.path, FLAGS.algorithm)
-    env = create_demo_env(
-        level=SCENARIO_MAP.get(FLAGS.scenario_number, 'academy_empty_goal_close'),
-        reward_experiment=FLAGS.reward,
+    from rl_project.evaluator import evaluate_model
+    total_reward = evaluate_model(
+        model=model,
+        scenario_number=FLAGS.scenario_number,
+        accuracy=FLAGS.accuracy,
+        reward=FLAGS.reward,
         representation=FLAGS.representation,
         stacked=FLAGS.stacked,
         render=FLAGS.render,
     )
-    number_of_runs = int(0)
-    total_reward = float(0)
-    while number_of_runs < FLAGS.accuracy:
-        obs = env.reset()
-        index = 0
-        done = False
-        rewards = float(0.0)
-        while not done:
-            index = index + 1
-            action, _states = model.predict(obs)
-            obs, rewards, done, info = env.step(action)
-        logger.info("EVALUATOR: run-{run} ended with reward: {reward}".format(
-            run=number_of_runs,
-            reward=rewards,
-        ))
-        total_reward = total_reward + rewards
-        number_of_runs = number_of_runs + 1
-
     logger.info(
         "EVALUATOR: ended with {runs} runs and receive in total reward: {reward}. Average reward: {average}".format(
-            runs=number_of_runs,
+            runs=FLAGS.accuracy,
             reward=total_reward,
-            average=total_reward / number_of_runs,
+            average=total_reward / FLAGS.accuracy,
         ))
 
 

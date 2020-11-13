@@ -40,22 +40,15 @@ def main(_):
     logger.info("STARTED")
     time_start = time.time()
 
-    from rl_project import environment
-    from rl_project.algorithm import train
-    from rl_project.environment import SCENARIO_MAP
-
-    env = environment.create_training_env(
-        number_of_processes=FLAGS.number_of_envs,
-        level=SCENARIO_MAP.get(FLAGS.scenario_number, 'academy_empty_goal_close'),
+    from rl_project.learner import create_rl_algorithm_model
+    trained_model = create_rl_algorithm_model(
+        algorithm=FLAGS.algorithm,
+        algorithm_policy=FLAGS.algorithm_policy,
+        scenario_number=FLAGS.scenario_number,
+        number_of_envs=FLAGS.number_of_envs,
         representation=FLAGS.representation,
         stacked=FLAGS.stacked,
-    )
-    trained_model = train(
-        vec_env=env,
-        total_number_of_steps=FLAGS.number_of_steps,
-        algorithm_name=FLAGS.algorithm,
-        algorithm_policy=FLAGS.algorithm_policy,
-    )
+    ).learn(FLAGS.number_of_steps)
     time_elapsed = time.time() - time_start
     logger.info("Time elapsed " + time.strftime("%H:%M:%S", time.gmtime(time_elapsed)))
     trained_model.save(save_path=run_name)

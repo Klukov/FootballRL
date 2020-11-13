@@ -3,17 +3,16 @@ from stable_baselines import TRPO
 from rl_project.environment import create_training_env
 
 
-def learn_trpo(
+def get_trpo(
         vec_env=None,
         policy='CnnPolicy',
-        total_number_of_steps=int(1e5),
 ) -> TRPO:
     """
     Parameter's default values are taken from stable_baselines.trpo_mpi.trpo_mpi.py
     """
     if vec_env is None:
         vec_env = create_training_env(1)
-    trpo = TRPO(
+    return TRPO(
         policy=policy,
         env=vec_env,
         gamma=0.99,
@@ -27,4 +26,3 @@ def learn_trpo(
         vf_iters=3,
         verbose=2,
     )
-    return trpo.learn(total_number_of_steps)

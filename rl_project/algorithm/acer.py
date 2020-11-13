@@ -3,10 +3,9 @@ from stable_baselines import ACER
 from rl_project.environment import create_training_env
 
 
-def learn_acer(
+def get_acer(
         vec_env=None,
         policy='CnnPolicy',
-        total_number_of_steps=int(1e5),
         learning_rate=7e-4,
         n_steps=20,
         max_grad_norm=10,
@@ -19,7 +18,7 @@ def learn_acer(
     """
     if vec_env is None:
         vec_env = create_training_env(1)
-    acer = ACER(
+    return ACER(
         policy=policy,
         env=vec_env,
         gamma=0.99,
@@ -41,4 +40,3 @@ def learn_acer(
         delta=1,
         verbose=2
     )
-    return acer.learn(total_number_of_steps)
