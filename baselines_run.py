@@ -1,4 +1,3 @@
-import re
 import time
 
 from absl import app
@@ -14,7 +13,7 @@ flags.DEFINE_enum('algorithm', 'PPO2', ['PPO2', 'DQN', 'A2C', 'ACER', 'GAIL', 'T
                   'Algorithm to be used for training - only some algorithms from stable-baselines')
 flags.DEFINE_string('algorithm_policy', 'CnnPolicy',
                     'The policy model to use (MlpPolicy, CnnPolicy, CnnLstmPolicy...')
-flags.DEFINE_integer('number_of_envs', int(1),
+flags.DEFINE_integer('number_of_envs', int(8),
                      'Number of env run parallelly to get result. Available only for ', int(1))
 flags.DEFINE_integer('number_of_steps', int(1e5),
                      'Total number of steps of the algorithm', int(1))
@@ -27,12 +26,12 @@ flags.DEFINE_boolean('stacked', True, 'If True, stack 4 observations, otherwise,
 
 def main(_):
     def get_run_name() -> str:
-        return "{algorithm}_scenario-{scenario}_{steps}M-steps_{envs}-env".format(
+        from stablebaselines_based import _get_run_name
+        return _get_run_name(
             algorithm=FLAGS.algorithm,
-            scenario=FLAGS.scenario_number,
-            steps=str(FLAGS.number_of_steps / 1e6).replace(".", "") if FLAGS.number_of_steps < 1e6
-            else re.sub("\..*", "", str(FLAGS.number_of_steps / 1e6)),
-            envs=FLAGS.number_of_envs,
+            scenario_number=FLAGS.scenario_number,
+            number_of_steps=FLAGS.number_of_steps,
+            number_of_envs=FLAGS.number_of_envs,
         )
 
     run_name = get_run_name()
@@ -40,7 +39,7 @@ def main(_):
     logger.info("STARTED")
     time_start = time.time()
 
-    from rl_project.learner import create_rl_algorithm_model
+    from stablebaselines_based.trainer import create_rl_algorithm_model
     trained_model = create_rl_algorithm_model(
         algorithm=FLAGS.algorithm,
         algorithm_policy=FLAGS.algorithm_policy,

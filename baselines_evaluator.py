@@ -23,22 +23,6 @@ flags.DEFINE_boolean('stacked', True, 'If True, stack 4 observations, otherwise,
 
 
 def main(_):
-    def load_model(path: str, algorithm='ppo2'):
-        from stable_baselines import PPO2, DQN, A2C, ACER, GAIL, TRPO
-        if algorithm == 'PPO2':
-            return PPO2.load(path)
-        if algorithm == 'DQN':
-            return DQN.load(path)
-        if algorithm == 'A2C':
-            return A2C.load(path)
-        if algorithm == 'ACER':
-            return ACER.load(path)
-        if algorithm == 'GAIL':
-            return GAIL.load(path)
-        if algorithm == 'TRPO':
-            return TRPO.load(path)
-        return None
-
     def get_run_name() -> str:
         return "EVALUATOR_{algorithm}_scenario-{scenario}_accuracy-{accuracy}".format(
             algorithm=FLAGS.algorithm,
@@ -49,9 +33,9 @@ def main(_):
     if FLAGS.path is None:
         raise ValueError("path to trained model must be given. Please run script with --help option")
     logger.get_absl_handler().use_absl_log_file(get_run_name(), './')
-    logger.info("EVALUATOR STARTED")
+    from stablebaselines_based.algorithm import load_model
     model = load_model(FLAGS.path, FLAGS.algorithm)
-    from rl_project.evaluator import evaluate_model
+    from stablebaselines_based.evaluator import evaluate_model
     total_reward = evaluate_model(
         model=model,
         scenario_number=FLAGS.scenario_number,
@@ -60,6 +44,7 @@ def main(_):
         representation=FLAGS.representation,
         stacked=FLAGS.stacked,
         render=FLAGS.render,
+        logging=logger.info,
     )
     logger.info(
         "EVALUATOR: ended with {runs} runs and receive in total reward: {reward}. Average reward: {average}".format(

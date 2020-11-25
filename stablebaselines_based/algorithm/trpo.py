@@ -1,6 +1,6 @@
 from stable_baselines import TRPO
 
-from rl_project.environment import create_training_env
+from stablebaselines_based.environment import create_training_env
 
 
 def get_trpo(
@@ -9,6 +9,7 @@ def get_trpo(
 ) -> TRPO:
     """
     Parameter's default values are taken from stable_baselines.trpo_mpi.trpo_mpi.py
+    Unfortunately TRPO could be run only on 1 env. There is possibility to run
     """
     if vec_env is None:
         vec_env = create_training_env(1)

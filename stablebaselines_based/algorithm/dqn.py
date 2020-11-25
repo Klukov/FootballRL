@@ -1,6 +1,6 @@
 from stable_baselines import DQN
 
-from rl_project.environment import create_training_env
+from stablebaselines_based.environment import create_training_env
 
 
 def get_dqn(
