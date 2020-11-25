@@ -26,7 +26,7 @@ flags.DEFINE_boolean('stacked', True, 'If True, stack 4 observations, otherwise,
 
 def main(_):
     def get_run_name() -> str:
-        from stablebaselines_based import _get_run_name
+        from rl_project import _get_run_name
         return _get_run_name(
             algorithm=FLAGS.algorithm,
             scenario_number=FLAGS.scenario_number,
@@ -39,7 +39,7 @@ def main(_):
     logger.info("STARTED")
     time_start = time.time()
 
-    from stablebaselines_based.trainer import create_rl_algorithm_model
+    from rl_project.trainer import create_rl_algorithm_model
     trained_model = create_rl_algorithm_model(
         algorithm=FLAGS.algorithm,
         algorithm_policy=FLAGS.algorithm_policy,

@@ -3,7 +3,7 @@ from typing import Optional
 from stable_baselines.common import BaseRLModel
 from stable_baselines.common.vec_env import SubprocVecEnv
 
-from stablebaselines_based.algorithm import ppo2, dqn, a2c, acer, trpo
+from rl_project.algorithm import ppo2, dqn, a2c, acer, trpo
 
 
 def _get_configured_rl_model(

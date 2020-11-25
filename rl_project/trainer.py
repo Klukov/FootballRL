@@ -2,7 +2,7 @@ import time
 
 from stable_baselines.common import BaseRLModel
 
-from stablebaselines_based import _get_run_name
+from rl_project import _get_run_name
 
 
 def create_rl_algorithm_model(
@@ -13,9 +13,9 @@ def create_rl_algorithm_model(
         representation: str = 'extracted',
         stacked: bool = True,
 ) -> BaseRLModel:
-    from stablebaselines_based import environment
-    from stablebaselines_based.algorithm import _get_configured_rl_model, _configure_tensorflow
-    from stablebaselines_based.environment import SCENARIO_MAP
+    from rl_project import environment
+    from rl_project.algorithm import _get_configured_rl_model, _configure_tensorflow
+    from rl_project.environment import SCENARIO_MAP
 
     env = environment.create_training_env(
         number_of_processes=number_of_envs,

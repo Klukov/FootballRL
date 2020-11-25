@@ -1,7 +1,7 @@
 import logging
 
-from stablebaselines_based.evaluator import run_evaluation
-from stablebaselines_based.trainer import run_training
+from rl_project.evaluator import run_evaluation
+from rl_project.trainer import run_training
 
 if __name__ == '__main__':
     ALGORITHM = 'PPO2'

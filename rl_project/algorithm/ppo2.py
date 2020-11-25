@@ -1,6 +1,6 @@
 from stable_baselines.ppo2 import PPO2
 
-from stablebaselines_based.environment import create_training_env
+from rl_project.environment import create_training_env
 
 
 def get_ppo2(

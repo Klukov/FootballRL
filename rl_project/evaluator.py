@@ -1,7 +1,7 @@
 from stable_baselines.common import BaseRLModel
 
-from stablebaselines_based import _get_run_name
-from stablebaselines_based.environment import create_demo_env, SCENARIO_MAP
+from rl_project import _get_run_name
+from rl_project.environment import create_demo_env, SCENARIO_MAP
 
 
 def evaluate_model(
@@ -69,7 +69,7 @@ def run_evaluation(
     logger = logging.getLogger(run_name_with_evaluation_mark)
     logger.info("STARTED: " + run_name_with_evaluation_mark)
 
-    from stablebaselines_based.algorithm import load_model
+    from rl_project.algorithm import load_model
     total_reward = evaluate_model(
         model=load_model(run_name, algorithm=algorithm),
         scenario_number=scenario_number,

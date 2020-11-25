@@ -33,9 +33,9 @@ def main(_):
     if FLAGS.path is None:
         raise ValueError("path to trained model must be given. Please run script with --help option")
     logger.get_absl_handler().use_absl_log_file(get_run_name(), './')
-    from stablebaselines_based.algorithm import load_model
+    from rl_project.algorithm import load_model
     model = load_model(FLAGS.path, FLAGS.algorithm)
-    from stablebaselines_based.evaluator import evaluate_model
+    from rl_project.evaluator import evaluate_model
     total_reward = evaluate_model(
         model=model,
         scenario_number=FLAGS.scenario_number,
