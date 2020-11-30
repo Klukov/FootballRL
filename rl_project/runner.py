@@ -3,9 +3,14 @@ import logging
 from rl_project.evaluator import run_evaluation
 from rl_project.trainer import run_training
 
+
+"""
+THIS SCRIPT SHOULD NOT BE USED BECAUSE PYTHON HAS MEMORY LEAKS. USE "runner.sh" INSTEAD.
+IF YOU HAVE A LOT OF RAM TO BE WASTED, YOU CAN USE IT.
+"""
 if __name__ == '__main__':
     ALGORITHM = 'PPO2'
-    SCENARIOS = (17, 14, 13,)
+    SCENARIOS = (13, 14, 17,)
     TIME_STEPS = (10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000, 5000000,)
     ACCURACY = 1000
     NUMBER_OF_ENVS = 8

@@ -6,7 +6,7 @@ from stable_baselines.common.vec_env import SubprocVecEnv
 from rl_project.algorithm import ppo2, dqn, a2c, acer, trpo
 
 
-def _get_configured_rl_model(
+def get_configured_rl_model(
         vec_env: SubprocVecEnv,
         algorithm_name: str,
         algorithm_policy: str,
@@ -37,20 +37,6 @@ def _get_configured_rl_model(
             policy=algorithm_policy,
         )
     return None
-
-
-def _configure_tensorflow() -> None:
-    """
-    Config taken from gfootball repo, check gfootball.examples.run_ppo2.py
-    """
-    import tensorflow.compat.v1 as tf
-    import multiprocessing
-    ncpu = multiprocessing.cpu_count()
-    config = tf.ConfigProto(allow_soft_placement=True,
-                            intra_op_parallelism_threads=ncpu,
-                            inter_op_parallelism_threads=ncpu)
-    config.gpu_options.allow_growth = True
-    tf.Session(config=config).__enter__()
 
 
 def load_model(path: str, algorithm: str):

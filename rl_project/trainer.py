@@ -3,6 +3,9 @@ import time
 from stable_baselines.common import BaseRLModel
 
 from rl_project import _get_run_name
+from rl_project import environment
+from rl_project.algorithm import get_configured_rl_model
+from rl_project.environment import SCENARIO_MAP
 
 
 def create_rl_algorithm_model(
@@ -13,9 +16,18 @@ def create_rl_algorithm_model(
         representation: str = 'extracted',
         stacked: bool = True,
 ) -> BaseRLModel:
-    from rl_project import environment
-    from rl_project.algorithm import _get_configured_rl_model, _configure_tensorflow
-    from rl_project.environment import SCENARIO_MAP
+    def _configure_tensorflow() -> None:
+        """
+        Config taken from gfootball repo, check gfootball.examples.run_ppo2.py
+        """
+        import tensorflow.compat.v1 as tf
+        import multiprocessing
+        ncpu = multiprocessing.cpu_count()
+        config = tf.ConfigProto(allow_soft_placement=True,
+                                intra_op_parallelism_threads=ncpu,
+                                inter_op_parallelism_threads=ncpu)
+        config.gpu_options.allow_growth = True
+        tf.Session(config=config).__enter__()
 
     env = environment.create_training_env(
         number_of_processes=number_of_envs,
@@ -24,7 +36,7 @@ def create_rl_algorithm_model(
         stacked=stacked,
     )
     _configure_tensorflow()
-    return _get_configured_rl_model(
+    return get_configured_rl_model(
         vec_env=env,
         algorithm_name=algorithm,
         algorithm_policy=algorithm_policy,
@@ -43,7 +55,6 @@ def run_training(
     """
 
     import logging
-
     run_name = _get_run_name(
         algorithm=algorithm,
         scenario_number=scenario_number,
