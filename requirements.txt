@@ -4,6 +4,6 @@ ray
 ray[rllib]
 stable_baselines
 tensorflow==1.15.4
-tensorflow-gpu==1.15.4
+tensorflow-gpu==2.5.0
 sonnet
 gfootball
