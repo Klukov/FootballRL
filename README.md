@@ -1,6 +1,8 @@
 # FootballRL
 My master thesis project  
-based on: https://github.com/google-research/football
+based on: https://github.com/google-research/football  
+Full master thesis is in file: Praca_Magisterska_Piotr_Klukowski.pdf  
+Unfortunately it is written in my native language -> polish  
 <br/><br/>
 
 **Reward types:**  
